@@ -6,8 +6,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="flex flex-col h-screen">
       <Toolbar />
-      <div className="p-8 bg-primary-100">{children}</div>
-      <div className="h-full">2</div>
+      <div className="p-8 bg-map-bg flex-1">{children}</div>
+      <div className="h-32 shadow-2xl">Filtros</div>
     </div>
   );
 };
