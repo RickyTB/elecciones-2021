@@ -1,20 +1,28 @@
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Box,
-  ButtonGroup,
+  Button,
   Flex,
   Heading,
-  Icon,
-  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { BsCalendarFill, BsListTask } from "react-icons/bs";
+import { HeatMapType } from "../../enums";
 
 export interface ToolbarProps {
   className?: string;
+  heatMapType: HeatMapType;
 }
 
-const Toolbar: React.FC<ToolbarProps> = () => {
+const titles: Record<HeatMapType, string> = {
+  [HeatMapType.Poverty]: "Pobreza",
+};
+
+const Toolbar: React.FC<ToolbarProps> = ({ heatMapType }) => {
   const bg = useColorModeValue("brand.600", "brand.300");
   const color = useColorModeValue("white", "gray.800");
   return (
@@ -36,13 +44,16 @@ const Toolbar: React.FC<ToolbarProps> = () => {
         </Heading>
       </Box>
       <Box>
-        <ButtonGroup isAttached variant="solid" colorScheme="gray">
-          <IconButton
-            aria-label="Show calendar"
-            icon={<Icon as={BsCalendarFill} />}
-          />
-          <IconButton aria-label="Show list" icon={<Icon as={BsListTask} />} />
-        </ButtonGroup>
+        <Menu>
+          <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+            {titles[heatMapType]}
+          </MenuButton>
+          <MenuList>
+            {(Object.keys(titles) as HeatMapType[]).map((key) => (
+              <MenuItem key={key}>{titles[key]}</MenuItem>
+            ))}
+          </MenuList>
+        </Menu>
       </Box>
     </Flex>
   );
