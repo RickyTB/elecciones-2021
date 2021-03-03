@@ -1,32 +1,41 @@
-import { mapObject } from "../../utils/helpers";
-import { PROVINCES } from "../../utils/provinces";
-import { Province } from "../Province";
-import ReactTooltip from "react-tooltip";
-import { useCallback } from "react";
+import { MapContainer, GeoJSON, useMapEvents } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import * as cantonesData from "../../data/ecuador_cantones.json";
+import * as provinciasData from "../../data/ecuador_provincias.json";
+import { useState } from "react";
+import "./Map.css";
 
 export interface MapProps {}
 
-const Map: React.FC<MapProps> = () => {
-  const handleTooltip = useCallback((evt) => {
-    setTimeout(() => {
-      ReactTooltip.hide(evt.target);
-    }, 2000);
-  }, []);
+interface MapEventsProps {
+  onZoomChange: (zoom: number) => void;
+}
 
+const MapEvents: React.FC<MapEventsProps> = ({ onZoomChange }) => {
+  const map = useMapEvents({
+    zoom(event) {
+      onZoomChange(map.getZoom());
+    },
+  });
+  return null;
+};
+
+const Map: React.FC<MapProps> = () => {
+  const [zoom, setZoom] = useState(6);
   return (
-    <>
-      <svg viewBox="0 0 792.75824 307.7699">
-        {mapObject(PROVINCES, (province, code) => (
-          <Province
-            path={province.path}
-            key={code}
-            title={province.title}
-            code={code as string}
-          />
-        ))}
-      </svg>
-      <ReactTooltip effect="solid" afterShow={handleTooltip} />
-    </>
+    <MapContainer
+      center={[-2.778, -83.54]}
+      zoom={zoom}
+      style={{ height: "100vh" }}
+      zoomControl={false}
+    >
+      {zoom > 8 ? (
+        <GeoJSON data={cantonesData.features as any} key="cantones" />
+      ) : (
+        <GeoJSON data={provinciasData.features as any} key="provincias" />
+      )}
+      <MapEvents onZoomChange={setZoom} />
+    </MapContainer>
   );
 };
 

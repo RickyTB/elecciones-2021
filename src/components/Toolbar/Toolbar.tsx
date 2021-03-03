@@ -23,12 +23,12 @@ const Toolbar: React.FC<ToolbarProps> = () => {
       p={2}
       justify="space-between"
       bg={bg}
-      position="sticky"
+      position="fixed"
       top="0"
       left="0"
       right="0"
       boxShadow="sm"
-      mb={4}
+      zIndex="sticky"
     >
       <Box p="2">
         <Heading size="md" color={color}>

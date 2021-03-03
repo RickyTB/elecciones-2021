@@ -9,9 +9,7 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
       <Layout>
-        <Box bg="white" borderRadius="lg" p={4}>
-          <Map />
-        </Box>
+        <Map />
       </Layout>
     </ChakraProvider>
   );
