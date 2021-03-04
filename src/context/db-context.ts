@@ -1,9 +1,7 @@
-import { Remote } from "comlink";
 import React, { useContext } from "react";
+import { Table } from "../enums";
 
-export const DBContext = React.createContext<Remote<SqlJs.Database>>(
-  null as any
-);
+export const DBContext = React.createContext<Record<Table, any[]>>(null as any);
 
 export const DBProvider = DBContext.Provider;
 export const DBConsumer = DBContext.Consumer;

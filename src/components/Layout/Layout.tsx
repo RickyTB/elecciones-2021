@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import { HeatMapType } from "../../enums";
+import { HeatMapType, Table } from "../../enums";
 import { ColorGuide } from "../ColorGuide";
 import { Map } from "../Map";
 import { Toolbar } from "../Toolbar";
 import { HeatMap, PovertyHeatMap } from "../../heatmaps";
 import { useState } from "react";
-import { initDb } from "../../bin";
 import { DBProvider } from "../../context";
 import { Text } from "@chakra-ui/react";
-import { Remote } from "comlink";
+import { initDb } from "../../bin";
+import alasql from 'alasql';
 
 export interface LayoutProps {}
 
@@ -18,7 +18,7 @@ const HeatMapMap: Record<HeatMapType, HeatMap> = {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [heatMap, setHeatMap] = useState(HeatMapType.Poverty);
-  const [db, setDb] = useState<Remote<SqlJs.Database>>();
+  const [db, setDb] = useState<Record<Table, any[]>>();
 
   useEffect(() => {
     initDb().then(setDb);

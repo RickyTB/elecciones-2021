@@ -2,49 +2,49 @@ create table provincia (
   id integer not null primary key,
   nombre TEXT not null,
   circunscripcion boolean not null
-) WITHOUT ROWID;
+);
 
 create table circunscripcion (
   id integer not null primary key,
   codigo integer not null,
   nombre TEXT not null,
-  "provinciaId" integer not null,
-  FOREIGN KEY ("provinciaId") REFERENCES provincia (id)
-) WITHOUT ROWID;
+  provinciaId integer not null,
+  FOREIGN KEY (provinciaId) REFERENCES provincia (id)
+);
 
 create table canton (
   id integer not null primary key,
   codigo integer not null,
   nombre TEXT not null,
-  "provinciaId" integer not null,
-  "cirId" integer,
-  FOREIGN KEY ("provinciaId") REFERENCES provincia (id),
-  FOREIGN KEY ("cirId") REFERENCES circunscripcion (id)
-) WITHOUT ROWID;
+  provinciaId integer not null,
+  cirId integer,
+  FOREIGN KEY (provinciaId) REFERENCES provincia (id),
+  FOREIGN KEY (cirId) REFERENCES circunscripcion (id)
+);
 
 create table parroquia (
   id integer not null primary key,
   codigo integer not null,
   nombre TEXT not null,
-  "cantonId" integer not null,
-  FOREIGN KEY ("cantonId") REFERENCES canton (id)
-) WITHOUT ROWID;
+  cantonId integer not null,
+  FOREIGN KEY (cantonId) REFERENCES canton (id)
+);
 
 create table zona (
   id integer not null primary key,
   codigo integer not null,
   nombre TEXT not null,
-  "parroquiaId" integer not null,
-  FOREIGN KEY ("parroquiaId") REFERENCES parroquia (id)
-) WITHOUT ROWID;
+  parroquiaId integer not null,
+  FOREIGN KEY (parroquiaId) REFERENCES parroquia (id)
+);
 
 create table junta (
   id integer not null primary key,
   codigo integer not null,
   nombre TEXT not null,
-  "zonaId" integer not null,
-  FOREIGN KEY ("zonaId") REFERENCES zona (id)
-) WITHOUT ROWID;
+  zonaId integer not null,
+  FOREIGN KEY (zonaId) REFERENCES zona (id)
+);
 
 create table res_presidente (
   id integer not null primary key,
@@ -67,9 +67,9 @@ create table res_presidente (
   total_suf integer not null,
   blanco integer not null,
   nulo integer not null,
-  "juntaId" integer not null,
-  FOREIGN KEY ("juntaId") REFERENCES junta (id)
-) WITHOUT ROWID;
+  juntaId integer not null,
+  FOREIGN KEY (juntaId) REFERENCES junta (id)
+);
 
 create table pob_cantones (
   codigo integer not null primary key,
@@ -77,9 +77,9 @@ create table pob_cantones (
   no_pobres integer not null,
   pobres integer not null,
   total integer not null,
-  "cantonId" integer not null,
-  FOREIGN KEY ("cantonId") REFERENCES canton (id)
-) WITHOUT ROWID;
+  cantonId integer not null,
+  FOREIGN KEY (cantonId) REFERENCES canton (id)
+);
 
 create table pob_parroquias (
   codigo integer not null primary key,
@@ -87,6 +87,6 @@ create table pob_parroquias (
   no_pobres integer not null,
   pobres integer not null,
   total integer not null,
-  "parroquiaId" integer not null,
-  FOREIGN KEY ("parroquiaId") REFERENCES parroquia (id)
-) WITHOUT ROWID;
+  parroquiaId integer not null,
+  FOREIGN KEY (parroquiaId) REFERENCES parroquia (id)
+);
