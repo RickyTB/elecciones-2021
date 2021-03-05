@@ -21,6 +21,7 @@ export interface ToolbarProps {
 
 const titles: Record<HeatMapType, string> = {
   [HeatMapType.Poverty]: "Pobreza",
+  [HeatMapType.PresidentialResults]: "Resultados presidenciales",
 };
 
 const Toolbar: React.FC<ToolbarProps> = ({ heatMapType, onHeatMapChange }) => {

@@ -5,9 +5,11 @@ import * as provinciasData from "../../data/ecuador_provincias.json";
 import { useState } from "react";
 import "./Map.css";
 import { HeatMap } from "../../heatmaps";
+import { HeatMapType } from "../../enums";
 
 export interface MapProps {
   heatMap: HeatMap;
+  heatMapType: HeatMapType;
 }
 
 interface MapEventsProps {
@@ -31,9 +33,7 @@ const defaultStyle = {
   opacity: 0.6
 };
 
-//(layer as any).options.fillOpacity = 1;
-
-const Map: React.FC<MapProps> = ({ heatMap }) => {
+const Map: React.FC<MapProps> = ({ heatMap, heatMapType }) => {
   const [zoom, setZoom] = useState(6);
   return (
     <MapContainer
@@ -45,14 +45,14 @@ const Map: React.FC<MapProps> = ({ heatMap }) => {
       {zoom > 8 ? (
         <GeoJSON
           data={cantonesData.features as any}
-          key="cantones"
+          key={`${heatMapType}-cantones`}
           onEachFeature={heatMap.processCantones}
           style={defaultStyle}
         />
       ) : (
         <GeoJSON
           data={provinciasData.features as any}
-          key="provincias"
+          key={`${heatMapType}-provincias`}
           onEachFeature={heatMap.processProvincias}
           style={defaultStyle}
         />

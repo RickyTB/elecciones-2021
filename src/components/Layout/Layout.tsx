@@ -3,7 +3,11 @@ import { HeatMapType } from "../../enums";
 import { ColorGuide } from "../ColorGuide";
 import { Map } from "../Map";
 import { Toolbar } from "../Toolbar";
-import { HeatMap, PovertyHeatMap } from "../../heatmaps";
+import {
+  HeatMap,
+  PovertyHeatMap,
+  PresidentialResultsHeatMap,
+} from "../../heatmaps";
 import { useState } from "react";
 import { Text } from "@chakra-ui/react";
 import { initDb } from "../../bin";
@@ -18,6 +22,7 @@ const Layout: React.FC<LayoutProps> = () => {
     initDb().then(() => {
       const heatMapMap: Record<HeatMapType, HeatMap> = {
         [HeatMapType.Poverty]: new PovertyHeatMap(),
+        [HeatMapType.PresidentialResults]: new PresidentialResultsHeatMap(),
       };
       setHeatMapMap(heatMapMap);
     });
@@ -26,7 +31,7 @@ const Layout: React.FC<LayoutProps> = () => {
   return heatMapMap ? (
     <>
       <Toolbar heatMapType={heatMap} onHeatMapChange={setHeatMap} />
-      <Map heatMap={heatMapMap[heatMap]} />
+      <Map heatMap={heatMapMap[heatMap]} heatMapType={heatMap} />
       <ColorGuide heatMap={heatMapMap[heatMap]} />
     </>
   ) : (
