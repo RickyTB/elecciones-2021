@@ -9,11 +9,11 @@ export interface ColorBoxProps {
 
 const ColorBox: React.FC<ColorBoxProps> = ({ title, subtitle, bg, color }) => {
   return (
-    <Box bg={bg} color={color} flex="1" p={3}>
-      <Heading as="h3" size="md">
+    <Box bg={bg} color={color} flex="1" px={3} py={2}>
+      <Heading as="h3" size="sm">
         {title}
       </Heading>
-      <Text>{subtitle}</Text>
+      <Text fontSize="sm">{subtitle}</Text>
     </Box>
   );
 };

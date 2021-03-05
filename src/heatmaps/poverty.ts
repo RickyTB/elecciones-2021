@@ -1,5 +1,4 @@
 import alasql from "alasql";
-import { Feature, Geometry, GeoJsonProperties } from "geojson";
 import { Layer } from "leaflet";
 import { ColorBoxProps } from "../components/ColorBox/ColorBox";
 import { HeatMap } from "./heatmap";
@@ -139,20 +138,16 @@ export class PovertyHeatMap extends HeatMap<number> {
     );
   }
 
-  paintFeature = (layer: Layer, name: string, poverty: number) => {
+  protected paintFeature = (layer: Layer, name: string, poverty: number) => {
     layer.bindTooltip(`
       <h4><strong>${name}</strong></h4>
       <span>${(poverty * 100).toFixed(2)}%</span>
     `);
 
     (layer as any).options.fillColor = this.props[Math.floor(poverty * 10)].bg;
-  }
+  };
 
-
-  protected processProvincias = (
-    id: number,
-  ) => {
-
+  protected processProvincias = (id: number) => {
     const pobParroquias = alasql(
       `
       SELECT SUM(pobres) pobres, SUM(total) total, provinciaId
@@ -190,10 +185,7 @@ export class PovertyHeatMap extends HeatMap<number> {
     return pobreza;
   };
 
-  processCantones = (
-    id: number
-  ) => {
-
+  processCantones = (id: number) => {
     const pobParroquias = alasql(
       `
       SELECT SUM(pobres) pobres, SUM(total) total, cantonId

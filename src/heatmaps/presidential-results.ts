@@ -1,5 +1,4 @@
 import alasql from "alasql";
-import { Feature, Geometry, GeoJsonProperties } from "geojson";
 import { Layer } from "leaflet";
 import { ColorBoxProps } from "../components/ColorBox/ColorBox";
 import { PresidentMap } from "../utils/constants";
@@ -72,7 +71,11 @@ export class PresidentialResultsHeatMap extends HeatMap<PresResult> {
     return results;
   }
 
-  paintFeature = (layer: Layer, name: string, { total, ...results }: PresResult) => {
+  protected paintFeature = (
+    layer: Layer,
+    name: string,
+    { total, ...results }: PresResult
+  ) => {
     const [presKey, presResult] = Object.entries(results).reduce(
       (arr, entry) => (entry[1] > arr[1] ? entry : arr),
       ["", 0]
@@ -89,12 +92,9 @@ export class PresidentialResultsHeatMap extends HeatMap<PresResult> {
 
     //@ts-ignore
     (layer as any).options.fillColor = this.props[presPropMap[presKey]].bg;
-  }
+  };
 
-  processProvincias = (
-    id: number
-  ) => {
-
+  processProvincias = (id: number) => {
     const [results] = alasql(
       `
             SELECT SUM(cand_1) cand_1, SUM(cand_6) cand_6, SUM(cand_9) cand_9, SUM(cand_12) cand_12, 
@@ -113,9 +113,7 @@ export class PresidentialResultsHeatMap extends HeatMap<PresResult> {
     return results;
   };
 
-  processCantones = (
-    id: number
-  ) => {
+  processCantones = (id: number) => {
     const [results] = alasql(
       `
               SELECT SUM(cand_1) cand_1, SUM(cand_6) cand_6, SUM(cand_9) cand_9, SUM(cand_12) cand_12, 
