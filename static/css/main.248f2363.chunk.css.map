@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/components/Map/Map.css","webpack://src/index.css"],"names":[],"mappings":"AAAA,mBACE,wBACF,CCFA,cAAc,CACd,oBAAoB,CACpB,mBAAmB","file":"main.248f2363.chunk.css","sourcesContent":[".leaflet-container {\n  background-color: #f9f9fa;\n}\n","@tailwind base;\n@tailwind components;\n@tailwind utilities;\n"]}
