@@ -41,7 +41,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ heatMapType, onHeatMapChange }) => {
     >
       <Box p="2">
         <Heading size="md" color={color}>
-          Mapa de Elecciones
+          Elecciones 2021
         </Heading>
       </Box>
       <Box>
