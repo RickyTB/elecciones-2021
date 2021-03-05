@@ -1,8 +1,17 @@
-import { FeatureGroupProps } from "react-leaflet";
+import * as geojson from "geojson";
+import { Layer } from "leaflet";
 import { ColorBoxProps } from "../components/ColorBox/ColorBox";
 
-export interface HeatMap {
-  props: ColorBoxProps[];
+export abstract class HeatMap {
+  abstract readonly props: ColorBoxProps[];
 
-  processFeature(feature: FeatureGroupProps): void;
+  abstract processProvincias: (
+    feature: geojson.Feature<geojson.GeometryObject>,
+    layer: Layer
+  ) => void;
+
+  abstract processCantones: (
+    feature: geojson.Feature<geojson.GeometryObject>,
+    layer: Layer
+  ) => void;
 }

@@ -16,13 +16,14 @@ import { HeatMapType } from "../../enums";
 export interface ToolbarProps {
   className?: string;
   heatMapType: HeatMapType;
+  onHeatMapChange: (type: HeatMapType) => void;
 }
 
 const titles: Record<HeatMapType, string> = {
   [HeatMapType.Poverty]: "Pobreza",
 };
 
-const Toolbar: React.FC<ToolbarProps> = ({ heatMapType }) => {
+const Toolbar: React.FC<ToolbarProps> = ({ heatMapType, onHeatMapChange }) => {
   const bg = useColorModeValue("brand.600", "brand.300");
   const color = useColorModeValue("white", "gray.800");
   return (
@@ -50,7 +51,9 @@ const Toolbar: React.FC<ToolbarProps> = ({ heatMapType }) => {
           </MenuButton>
           <MenuList>
             {(Object.keys(titles) as HeatMapType[]).map((key) => (
-              <MenuItem key={key}>{titles[key]}</MenuItem>
+              <MenuItem key={key} onClick={() => onHeatMapChange(key)}>
+                {titles[key]}
+              </MenuItem>
             ))}
           </MenuList>
         </Menu>

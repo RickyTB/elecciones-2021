@@ -1,28 +1,34 @@
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { ColorBox } from "../ColorBox";
 import { HeatMap } from "../../heatmaps";
+import React from "react";
 
 export interface ColorGuideProps {
   heatMap: HeatMap;
 }
 
-const ColorGuide: React.FC<ColorGuideProps> = ({ heatMap }) => {
-  return (
+const ColorGuide: React.FC<ColorGuideProps> = ({ heatMap }) => (
+  <Box
+    position="absolute"
+    bottom={0}
+    left={0}
+    right={0}
+    zIndex="banner"
+    boxShadow="base"
+    overflow="auto"
+  >
     <Flex
-      position="fixed"
-      bottom={0}
-      left={0}
-      right={0}
-      zIndex="banner"
       flexDir="row"
       justifyContent="space-evenly"
       alignItems="stretch"
+      minW="1080px"
+      width="100%"
     >
       {heatMap.props.map((props, index) => (
         <ColorBox {...props} key={index} />
       ))}
     </Flex>
-  );
-};
+  </Box>
+);
 
 export default ColorGuide;

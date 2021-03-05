@@ -9,6 +9,8 @@ import resultadosCsv from "../data/elecciones_res_presidente.csv";
 import pobCantonesCsv from "../data/pobreza_cantones.csv";
 import pobParroquiasCsv from "../data/pobreza_parroquias.csv";
 import { Table } from "../enums";
+import alasql from "alasql";
+import tablesSQL from "../data/tables.sql";
 
 interface TableData {
   table: Table;
@@ -55,11 +57,11 @@ const data: TableData[] = [
 ];
 
 async function parseData(data: TableData): Promise<any[]> {
-  console.log(data.table);
   return new Promise((res, error) => {
     Papa.parse(data.path, {
       download: true,
       header: true,
+      dynamicTyping: true,
       complete: function (results) {
         res(results.data);
       },
@@ -68,12 +70,21 @@ async function parseData(data: TableData): Promise<any[]> {
   });
 }
 
-export async function initDb(): Promise<Record<Table, any[]>> {
-  const db: Record<Table, any[]> = {} as any;
+export async function initDb() {
+  alasql(tablesSQL);
 
   for (const table of data) {
-    db[table.table] = await parseData(table);
-  }
+    (alasql as any).tables[table.table].data = await parseData(table);
+    alasql(`CREATE INDEX ${table.table}_id ON ${table.table} (id)`);
+    alasql(`REINDEX ${table.table}_id`);
 
-  return db;
+    const obj = (alasql as any).tables[table.table].data[0];
+    const foreignKeys = Object.keys(obj).filter((key) => key.endsWith("Id"));
+    for (const foreignKey of foreignKeys) {
+      alasql(
+        `CREATE INDEX ${table.table}_${foreignKey} ON ${table.table} (${foreignKey})`
+      );
+      alasql(`REINDEX ${table.table}_${foreignKey}`);
+    }
+  }
 }

@@ -1,10 +1,10 @@
-create table provincia (
+create table IF NOT EXISTS provincia (
   id integer not null primary key,
   nombre TEXT not null,
   circunscripcion boolean not null
 );
 
-create table circunscripcion (
+create table IF NOT EXISTS circunscripcion (
   id integer not null primary key,
   codigo integer not null,
   nombre TEXT not null,
@@ -12,7 +12,7 @@ create table circunscripcion (
   FOREIGN KEY (provinciaId) REFERENCES provincia (id)
 );
 
-create table canton (
+create table IF NOT EXISTS canton (
   id integer not null primary key,
   codigo integer not null,
   nombre TEXT not null,
@@ -22,7 +22,7 @@ create table canton (
   FOREIGN KEY (cirId) REFERENCES circunscripcion (id)
 );
 
-create table parroquia (
+create table IF NOT EXISTS parroquia (
   id integer not null primary key,
   codigo integer not null,
   nombre TEXT not null,
@@ -30,7 +30,7 @@ create table parroquia (
   FOREIGN KEY (cantonId) REFERENCES canton (id)
 );
 
-create table zona (
+create table IF NOT EXISTS zona (
   id integer not null primary key,
   codigo integer not null,
   nombre TEXT not null,
@@ -38,7 +38,7 @@ create table zona (
   FOREIGN KEY (parroquiaId) REFERENCES parroquia (id)
 );
 
-create table junta (
+create table IF NOT EXISTS junta (
   id integer not null primary key,
   codigo integer not null,
   nombre TEXT not null,
@@ -46,7 +46,7 @@ create table junta (
   FOREIGN KEY (zonaId) REFERENCES zona (id)
 );
 
-create table res_presidente (
+create table IF NOT EXISTS res_presidente (
   id integer not null primary key,
   cand_1 integer not null,
   cand_2 integer not null,
@@ -71,7 +71,7 @@ create table res_presidente (
   FOREIGN KEY (juntaId) REFERENCES junta (id)
 );
 
-create table pob_cantones (
+create table IF NOT EXISTS pob_cantones (
   codigo integer not null primary key,
   nombre TEXT not null,
   no_pobres integer not null,
@@ -81,7 +81,7 @@ create table pob_cantones (
   FOREIGN KEY (cantonId) REFERENCES canton (id)
 );
 
-create table pob_parroquias (
+create table IF NOT EXISTS pob_parroquias (
   codigo integer not null primary key,
   nombre TEXT not null,
   no_pobres integer not null,

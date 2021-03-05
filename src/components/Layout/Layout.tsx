@@ -1,35 +1,34 @@
 import React, { useEffect } from "react";
-import { HeatMapType, Table } from "../../enums";
+import { HeatMapType } from "../../enums";
 import { ColorGuide } from "../ColorGuide";
 import { Map } from "../Map";
 import { Toolbar } from "../Toolbar";
 import { HeatMap, PovertyHeatMap } from "../../heatmaps";
 import { useState } from "react";
-import { DBProvider } from "../../context";
 import { Text } from "@chakra-ui/react";
 import { initDb } from "../../bin";
-import alasql from 'alasql';
 
 export interface LayoutProps {}
 
-const HeatMapMap: Record<HeatMapType, HeatMap> = {
-  [HeatMapType.Poverty]: new PovertyHeatMap(),
-};
-
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = () => {
   const [heatMap, setHeatMap] = useState(HeatMapType.Poverty);
-  const [db, setDb] = useState<Record<Table, any[]>>();
+  const [heatMapMap, setHeatMapMap] = useState<Record<HeatMapType, HeatMap>>();
 
   useEffect(() => {
-    initDb().then(setDb);
+    initDb().then(() => {
+      const heatMapMap: Record<HeatMapType, HeatMap> = {
+        [HeatMapType.Poverty]: new PovertyHeatMap(),
+      };
+      setHeatMapMap(heatMapMap);
+    });
   }, []);
 
-  return db ? (
-    <DBProvider value={db}>
-      <Toolbar heatMapType={heatMap} />
-      <Map />
-      <ColorGuide heatMap={HeatMapMap[heatMap]} />
-    </DBProvider>
+  return heatMapMap ? (
+    <>
+      <Toolbar heatMapType={heatMap} onHeatMapChange={setHeatMap} />
+      <Map heatMap={heatMapMap[heatMap]} />
+      <ColorGuide heatMap={heatMapMap[heatMap]} />
+    </>
   ) : (
     <Text>Cargando...</Text>
   );
