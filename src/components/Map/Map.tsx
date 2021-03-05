@@ -30,7 +30,7 @@ const defaultStyle = {
   fillColor: "#fff",
   color: "black",
   weight: 2,
-  opacity: 0.6
+  opacity: 0.6,
 };
 
 const Map: React.FC<MapProps> = ({ heatMap, heatMapType }) => {
@@ -46,14 +46,14 @@ const Map: React.FC<MapProps> = ({ heatMap, heatMapType }) => {
         <GeoJSON
           data={cantonesData.features as any}
           key={`${heatMapType}-cantones`}
-          onEachFeature={heatMap.processCantones}
+          onEachFeature={heatMap.handleCantonFeature}
           style={defaultStyle}
         />
       ) : (
         <GeoJSON
           data={provinciasData.features as any}
           key={`${heatMapType}-provincias`}
-          onEachFeature={heatMap.processProvincias}
+          onEachFeature={heatMap.handleProvinciaFeature}
           style={defaultStyle}
         />
       )}

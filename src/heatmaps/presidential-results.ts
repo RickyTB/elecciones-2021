@@ -20,7 +20,7 @@ type PresResult = {
   total: number;
 };
 
-export class PresidentialResultsHeatMap extends HeatMap {
+export class PresidentialResultsHeatMap extends HeatMap<PresResult> {
   readonly props: ColorBoxProps[];
 
   constructor() {
@@ -72,7 +72,7 @@ export class PresidentialResultsHeatMap extends HeatMap {
     return results;
   }
 
-  paintFeature(layer: Layer, name: string, { total, ...results }: PresResult) {
+  paintFeature = (layer: Layer, name: string, { total, ...results }: PresResult) => {
     const [presKey, presResult] = Object.entries(results).reduce(
       (arr, entry) => (entry[1] > arr[1] ? entry : arr),
       ["", 0]
@@ -92,11 +92,8 @@ export class PresidentialResultsHeatMap extends HeatMap {
   }
 
   processProvincias = (
-    feature: Feature<Geometry, GeoJsonProperties>,
-    layer: Layer
+    id: number
   ) => {
-    const id = feature.properties?.id_prov;
-    if (id === 25) return;
 
     const [results] = alasql(
       `
@@ -113,15 +110,12 @@ export class PresidentialResultsHeatMap extends HeatMap {
           `
     );
 
-    this.paintFeature(layer, feature.properties?.dpa_despro, results);
+    return results;
   };
 
   processCantones = (
-    feature: Feature<Geometry, GeoJsonProperties>,
-    layer: Layer
+    id: number
   ) => {
-    const id = feature.properties?.ID;
-
     const [results] = alasql(
       `
               SELECT SUM(cand_1) cand_1, SUM(cand_6) cand_6, SUM(cand_9) cand_9, SUM(cand_12) cand_12, 
@@ -136,6 +130,6 @@ export class PresidentialResultsHeatMap extends HeatMap {
             `
     );
 
-    this.paintFeature(layer, feature.properties?.DPA_DESCAN, results);
+    return results;
   };
 }

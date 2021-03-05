@@ -7,7 +7,7 @@ import { HeatMap } from "./heatmap";
 const printSubtitle = (value: number) =>
   `${value} provincia${value === 1 ? "" : "s"}`;
 
-export class PovertyHeatMap extends HeatMap {
+export class PovertyHeatMap extends HeatMap<number> {
   readonly props: ColorBoxProps[];
 
   constructor() {
@@ -139,7 +139,7 @@ export class PovertyHeatMap extends HeatMap {
     );
   }
 
-  paintFeature(layer: Layer, name: string, poverty: number) {
+  paintFeature = (layer: Layer, name: string, poverty: number) => {
     layer.bindTooltip(`
       <h4><strong>${name}</strong></h4>
       <span>${(poverty * 100).toFixed(2)}%</span>
@@ -148,12 +148,10 @@ export class PovertyHeatMap extends HeatMap {
     (layer as any).options.fillColor = this.props[Math.floor(poverty * 10)].bg;
   }
 
-  processProvincias = (
-    feature: Feature<Geometry, GeoJsonProperties>,
-    layer: Layer
-  ): void => {
-    const id = feature.properties?.id_prov;
-    if (id === 25) return;
+
+  protected processProvincias = (
+    id: number,
+  ) => {
 
     const pobParroquias = alasql(
       `
@@ -189,14 +187,12 @@ export class PovertyHeatMap extends HeatMap {
       [pobrezaList]
     );
 
-    this.paintFeature(layer, feature.properties?.dpa_despro, pobreza);
+    return pobreza;
   };
 
   processCantones = (
-    feature: Feature<Geometry, GeoJsonProperties>,
-    layer: Layer
-  ): void => {
-    const id = feature.properties?.ID;
+    id: number
+  ) => {
 
     const pobParroquias = alasql(
       `
@@ -230,6 +226,6 @@ export class PovertyHeatMap extends HeatMap {
       [pobrezaList]
     );
 
-    this.paintFeature(layer, feature.properties?.DPA_DESCAN, pobreza);
+    return pobreza;
   };
 }
