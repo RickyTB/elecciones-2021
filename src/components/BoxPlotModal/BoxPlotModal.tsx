@@ -12,6 +12,7 @@ import React from "react";
 import Plot from "react-plotly.js";
 import { useMemo } from "react";
 import alasql from "alasql";
+import { mapObject } from '../../utils/helpers';
 
 export interface BoxPlotModalProps {
   isOpen: boolean;
@@ -47,6 +48,38 @@ interface JuntaResult {
   canton: string;
   circunscripcion: string;
   provincia: string;
+}
+
+interface CandResult {
+  results: number[];
+  info: {
+    codigo: number;
+    junta: string;
+    zona: string;
+    zona_id: string;
+    parroquia: string;
+    canton: string;
+    circunscripcion: string;
+    provincia: string;
+  }[];
+}
+type ParsedResult = {
+  cand_1: CandResult;
+  cand_2: CandResult;
+  cand_3: CandResult;
+  cand_4: CandResult;
+  cand_5: CandResult;
+  cand_6: CandResult;
+  cand_7: CandResult;
+  cand_8: CandResult;
+  cand_9: CandResult;
+  cand_10: CandResult;
+  cand_11: CandResult;
+  cand_12: CandResult;
+  cand_13: CandResult;
+  cand_14: CandResult;
+  cand_15: CandResult;
+  cand_16: CandResult;
 }
 
 const TableAbbrMap = {
@@ -119,36 +152,58 @@ ORDER BY res_presidente.juntaId
   }, [provId, cirId, cantonId, parrId, zonaId, juntaId]);
 
   const data = useMemo(() => {
-    return results.map((result) => ({
-      type: "box",
-      y: [
-        result.cand_1,
-        result.cand_2,
-        result.cand_3,
-        result.cand_4,
-        result.cand_5,
-        result.cand_6,
-        result.cand_7,
-        result.cand_8,
-        result.cand_9,
-        result.cand_10,
-        result.cand_11,
-        result.cand_12,
-        result.cand_13,
-        result.cand_14,
-        result.cand_15,
-        result.cand_16,
-      ],
-      marker: {
-        color: "rgb(8,81,156)",
-        outliercolor: "rgba(219, 64, 82, 0.6)",
-        line: {
-          outliercolor: "rgba(219, 64, 82, 1.0)",
-          outlierwidth: 2,
+    const parsed = results
+      .reduce<ParsedResult>(
+        (obj, result) => {
+          for (let i = 1; i <= 16; i++) {
+            //@ts-ignore
+            obj[`cand_${i}`].results.push(result[`cand_${i}`]);
+            //@ts-ignore
+            obj[`cand_${i}`].info.push({
+              codigo: result.codigo,
+              junta: result.junta,
+              zona: result.zona,
+              zona_id: result.zona_id,
+              parroquia: result.parroquia,
+              canton: result.canton,
+              circunscripcion: result.circunscripcion,
+              provincia: result.provincia,
+            });
+          }
+          return obj;
         },
-      },
-      boxpoints: "suspectedoutliers",
-    })) as any;
+        {
+          cand_1: { results: [], info: [] },
+          cand_2: { results: [], info: [] },
+          cand_3: { results: [], info: [] },
+          cand_4: { results: [], info: [] },
+          cand_5: { results: [], info: [] },
+          cand_6: { results: [], info: [] },
+          cand_7: { results: [], info: [] },
+          cand_8: { results: [], info: [] },
+          cand_9: { results: [], info: [] },
+          cand_10: { results: [], info: [] },
+          cand_11: { results: [], info: [] },
+          cand_12: { results: [], info: [] },
+          cand_13: { results: [], info: [] },
+          cand_14: { results: [], info: [] },
+          cand_15: { results: [], info: [] },
+          cand_16: { results: [], info: [] },
+        }
+      );
+      return mapObject(parsed, (cand) => ({
+        type: "box",
+        y: cand.results,
+        marker: {
+          color: "rgb(8,81,156)",
+          outliercolor: "rgba(219, 64, 82, 0.6)",
+          line: {
+            outliercolor: "rgba(219, 64, 82, 1.0)",
+            outlierwidth: 2,
+          },
+        },
+        boxpoints: "suspectedoutliers",
+      })) as any;
   }, [results]);
 
   const names = useMemo(() => {
