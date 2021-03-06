@@ -12,7 +12,8 @@ import React from "react";
 import Plot from "react-plotly.js";
 import { useMemo } from "react";
 import alasql from "alasql";
-import { mapObject } from '../../utils/helpers';
+import { mapObject, allIndexes } from "../../utils/helpers";
+import { PresidentMap } from "../../utils/constants";
 
 export interface BoxPlotModalProps {
   isOpen: boolean;
@@ -52,16 +53,7 @@ interface JuntaResult {
 
 interface CandResult {
   results: number[];
-  info: {
-    codigo: number;
-    junta: string;
-    zona: string;
-    zona_id: string;
-    parroquia: string;
-    canton: string;
-    circunscripcion: string;
-    provincia: string;
-  }[];
+  info: string[];
 }
 type ParsedResult = {
   cand_1: CandResult;
@@ -80,7 +72,7 @@ type ParsedResult = {
   cand_14: CandResult;
   cand_15: CandResult;
   cand_16: CandResult;
-}
+};
 
 const TableAbbrMap = {
   0: "pr",
@@ -109,8 +101,9 @@ const BoxPlotModal: React.FC<BoxPlotModalProps> = ({
 
   const results = useMemo(() => {
     const id = ids.reduceRight((prev, current) => prev || current);
+    const indexes = allIndexes(ids, id);
     //@ts-ignore
-    const table = TableAbbrMap[ids.indexOf(id)];
+    const table = TableAbbrMap[indexes[indexes.length - 1]];
     return alasql(`
     SELECT cand_1,
     cand_2,
@@ -152,58 +145,57 @@ ORDER BY res_presidente.juntaId
   }, [provId, cirId, cantonId, parrId, zonaId, juntaId]);
 
   const data = useMemo(() => {
-    const parsed = results
-      .reduce<ParsedResult>(
-        (obj, result) => {
-          for (let i = 1; i <= 16; i++) {
-            //@ts-ignore
-            obj[`cand_${i}`].results.push(result[`cand_${i}`]);
-            //@ts-ignore
-            obj[`cand_${i}`].info.push({
-              codigo: result.codigo,
-              junta: result.junta,
-              zona: result.zona,
-              zona_id: result.zona_id,
-              parroquia: result.parroquia,
-              canton: result.canton,
-              circunscripcion: result.circunscripcion,
-              provincia: result.provincia,
-            });
-          }
-          return obj;
-        },
-        {
-          cand_1: { results: [], info: [] },
-          cand_2: { results: [], info: [] },
-          cand_3: { results: [], info: [] },
-          cand_4: { results: [], info: [] },
-          cand_5: { results: [], info: [] },
-          cand_6: { results: [], info: [] },
-          cand_7: { results: [], info: [] },
-          cand_8: { results: [], info: [] },
-          cand_9: { results: [], info: [] },
-          cand_10: { results: [], info: [] },
-          cand_11: { results: [], info: [] },
-          cand_12: { results: [], info: [] },
-          cand_13: { results: [], info: [] },
-          cand_14: { results: [], info: [] },
-          cand_15: { results: [], info: [] },
-          cand_16: { results: [], info: [] },
+    const parsed = results.reduce<ParsedResult>(
+      (obj, result) => {
+        for (let i = 1; i <= 16; i++) {
+          //@ts-ignore
+          obj[`cand_${i}`].results.push(result[`cand_${i}`]);
+          //@ts-ignore
+          obj[`cand_${i}`].info.push([
+            "Provincia: " + result.provincia,
+            "Circunscripción: " + (result.circunscripcion || "N/A"),
+            "Cantón: " + result.canton,
+            "Zona: " + result.zona,
+            "Junta: " + result.junta,
+            "Código: " + result.codigo,
+          ]);
         }
-      );
-      return mapObject(parsed, (cand) => ({
-        type: "box",
-        y: cand.results,
-        marker: {
-          color: "rgb(8,81,156)",
-          outliercolor: "rgba(219, 64, 82, 0.6)",
-          line: {
-            outliercolor: "rgba(219, 64, 82, 1.0)",
-            outlierwidth: 2,
-          },
+        return obj;
+      },
+      {
+        cand_1: { results: [], info: [] },
+        cand_2: { results: [], info: [] },
+        cand_3: { results: [], info: [] },
+        cand_4: { results: [], info: [] },
+        cand_5: { results: [], info: [] },
+        cand_6: { results: [], info: [] },
+        cand_7: { results: [], info: [] },
+        cand_8: { results: [], info: [] },
+        cand_9: { results: [], info: [] },
+        cand_10: { results: [], info: [] },
+        cand_11: { results: [], info: [] },
+        cand_12: { results: [], info: [] },
+        cand_13: { results: [], info: [] },
+        cand_14: { results: [], info: [] },
+        cand_15: { results: [], info: [] },
+        cand_16: { results: [], info: [] },
+      }
+    );
+    return mapObject(parsed, (cand, key) => ({
+      type: "box",
+      y: cand.results,
+      marker: {
+        color: "rgb(8,81,156)",
+        outliercolor: "rgba(219, 64, 82, 0.6)",
+        line: {
+          outliercolor: "rgba(219, 64, 82, 1.0)",
+          outlierwidth: 2,
         },
-        boxpoints: "suspectedoutliers",
-      })) as any;
+      },
+      name: PresidentMap[key],
+      text: cand.info,
+      boxpoints: "suspectedoutliers",
+    })) as any;
   }, [results]);
 
   const names = useMemo(() => {

@@ -1,5 +1,5 @@
 import { Box, Button, Heading } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useInput } from "../../hooks/use-input";
 import { DBSelect } from "../DBSelect";
 import { useState } from "react";
@@ -18,6 +18,24 @@ const StatsSidebar: React.FC<StatsSidebarProps> = () => {
   const [juntaId, onJuntaIdChange, setJuntaId] = useInput();
 
   const [isBoxPlotOpen, setBoxPlotOpen] = useState(false);
+
+  useEffect(() => {
+    setCantonId("");
+    setParrId("");
+    setZonaId("");
+    setJuntaId("");
+  }, [cirId, provId]);
+
+  useEffect(() => {
+    setParrId("");
+    setZonaId("");
+    setJuntaId("");
+  }, [cantonId]);
+
+  useEffect(() => {
+    setZonaId("");
+    setJuntaId("");
+  }, [parrId]);
 
   return (
     <Box bg="white" w="md" boxShadow="base" p={4}>

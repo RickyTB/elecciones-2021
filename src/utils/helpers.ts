@@ -10,3 +10,13 @@ export const mapObject = <T, U>(
 export function capitalizeFirstLetter(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+export function allIndexes<T>(array: T[], element: T): number[] {
+  let indexes = [];
+  let idx = array.indexOf(element);
+  while (idx != -1) {
+    indexes.push(idx);
+    idx = array.indexOf(element, idx + 1);
+  }
+  return indexes;
+}
