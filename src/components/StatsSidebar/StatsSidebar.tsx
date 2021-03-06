@@ -1,7 +1,9 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Button, Heading } from "@chakra-ui/react";
 import React from "react";
 import { useInput } from "../../hooks/use-input";
 import { DBSelect } from "../DBSelect";
+import { useState } from "react";
+import { BoxPlotModal } from "../BoxPlotModal";
 
 export interface StatsSidebarProps {}
 
@@ -14,6 +16,8 @@ const StatsSidebar: React.FC<StatsSidebarProps> = () => {
   const [parrId, onParrIdChange, setParrId] = useInput();
   const [zonaId, onZonaIdChange, setZonaId] = useInput();
   const [juntaId, onJuntaIdChange, setJuntaId] = useInput();
+
+  const [isBoxPlotOpen, setBoxPlotOpen] = useState(false);
 
   return (
     <Box bg="white" w="md" boxShadow="base" p={4}>
@@ -81,6 +85,22 @@ const StatsSidebar: React.FC<StatsSidebarProps> = () => {
         fk={zonaId}
         isDisabled={!zonaId}
       />
+
+      <Button
+        colorScheme="brand"
+        onClick={() => setBoxPlotOpen(true)}
+        isDisabled={!parrId}
+      >
+        Graficar resultados
+      </Button>
+
+      {isBoxPlotOpen && (
+        <BoxPlotModal
+          ids={[provId, cirId, cantonId, parrId, zonaId, juntaId]}
+          isOpen={isBoxPlotOpen}
+          onClose={() => setBoxPlotOpen(false)}
+        />
+      )}
     </Box>
   );
 };
