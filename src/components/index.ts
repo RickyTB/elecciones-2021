@@ -5,3 +5,5 @@ export * from "./Toolbar";
 export * from "./ProvinceInfo";
 export * from "./ColorGuide";
 export * from "./ColorBox";
+export * from "./StatsSidebar";
+export * from "./DBSelect";

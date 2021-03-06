@@ -1,4 +1,4 @@
-export const PresidentMap = {
+export const PresidentMap: Record<string, string> = {
   cand_1: "ANDRES ARAUZ GALARZA",
   cand_2: "LUCIO GUTIERREZ",
   cand_3: "GERSON ALMEIDA",

@@ -1,7 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { initDb } from "../../bin";
-import { ColorGuide, Map, Toolbar } from "../../components";
+import { ColorGuide, Map, StatsSidebar, Toolbar } from "../../components";
 import { HeatMapType } from "../../enums";
 import {
   HeatMap,
@@ -28,8 +28,9 @@ const MapPage: React.FC<MapPageProps> = () => {
   return heatMapMap ? (
     <>
       <Toolbar heatMapType={heatMap} onHeatMapChange={setHeatMap} />
-      <Box flex={1}>
+      <Box flex={1} d="flex">
         <Map heatMap={heatMapMap[heatMap]} heatMapType={heatMap} />
+        <StatsSidebar />
       </Box>
       <ColorGuide heatMap={heatMapMap[heatMap]} />
     </>

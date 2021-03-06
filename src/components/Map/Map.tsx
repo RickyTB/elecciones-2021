@@ -39,7 +39,7 @@ const Map: React.FC<MapProps> = ({ heatMap, heatMapType }) => {
     <MapContainer
       center={[-2.778, -83.54]}
       zoom={zoom}
-      style={{ height: "100%" }}
+      style={{ height: "100%", flex: 1, }}
     >
       {zoom > 8 ? (
         <GeoJSON

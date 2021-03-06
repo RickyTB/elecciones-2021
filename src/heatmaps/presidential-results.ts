@@ -76,22 +76,23 @@ export class PresidentialResultsHeatMap extends HeatMap<PresResult> {
     name: string,
     { total, ...results }: PresResult
   ) => {
-    const [presKey, presResult] = Object.entries(results).reduce(
-      (arr, entry) => (entry[1] > arr[1] ? entry : arr),
-      ["", 0]
-    );
-    //@ts-ignore
-    const label = PresidentMap[presKey];
+    const order = Object.entries(results).sort((a, b) => b[1] - a[1]);
 
     layer.bindTooltip(`
           <h4><strong>${name}</strong></h4>
-          <span>Ganador: ${label}, ${((presResult / total) * 100).toFixed(
-      2
-    )}% de votos.</span>
+          ${order
+            .map(
+              (entry, index) =>
+                `<p>${index + 1}°: ${PresidentMap[entry[0]]}, ${(
+                  (entry[1] / total) *
+                  100
+                ).toFixed(2)}% de votos.</p>`
+            )
+            .join("")}
         `);
 
     //@ts-ignore
-    (layer as any).options.fillColor = this.props[presPropMap[presKey]].bg;
+    (layer as any).options.fillColor = this.props[presPropMap[order[0][0]]].bg;
   };
 
   processProvincias = (id: number) => {
