@@ -11,7 +11,7 @@ const WithCir = ["9", "13", "17"];
 
 const StatsSidebar: React.FC<StatsSidebarProps> = () => {
   const [provId, onProvIdChange, setProvId] = useInput();
-  const [cirId, onCirIdChange] = useInput();
+  const [cirId, onCirIdChange, setCirId] = useInput();
   const [cantonId, onCantonIdChange, setCantonId] = useInput();
   const [parrId, onParrIdChange, setParrId] = useInput();
   const [zonaId, onZonaIdChange, setZonaId] = useInput();
@@ -20,22 +20,25 @@ const StatsSidebar: React.FC<StatsSidebarProps> = () => {
   const [isBoxPlotOpen, setBoxPlotOpen] = useState(false);
 
   useEffect(() => {
+    setCirId("");
     setCantonId("");
-    setParrId("");
-    setZonaId("");
-    setJuntaId("");
-  }, [cirId, provId]);
+  }, [provId]);
+
+  useEffect(() => {
+    setCantonId("");
+  }, [cirId]);
 
   useEffect(() => {
     setParrId("");
-    setZonaId("");
-    setJuntaId("");
   }, [cantonId]);
 
   useEffect(() => {
     setZonaId("");
-    setJuntaId("");
   }, [parrId]);
+
+  useEffect(() => {
+    setJuntaId("");
+  }, [zonaId]);
 
   return (
     <Box bg="white" w="md" boxShadow="base" p={4}>
@@ -72,6 +75,7 @@ const StatsSidebar: React.FC<StatsSidebarProps> = () => {
         fkTable="provincia"
         fk={provId}
         isDisabled={!provId}
+        cirId={cirId}
       />
 
       <DBSelect
@@ -107,7 +111,7 @@ const StatsSidebar: React.FC<StatsSidebarProps> = () => {
       <Button
         colorScheme="brand"
         onClick={() => setBoxPlotOpen(true)}
-        isDisabled={!parrId}
+        isDisabled={!cantonId}
       >
         Graficar resultados
       </Button>

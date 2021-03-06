@@ -12,6 +12,7 @@ export interface DBSelectProps {
   placeholder?: string;
   label: string;
   isDisabled?: boolean;
+  cirId?: number | string;
 }
 
 const DBSelect: React.FC<DBSelectProps> = ({
@@ -23,16 +24,19 @@ const DBSelect: React.FC<DBSelectProps> = ({
   placeholder = "Todas",
   label,
   isDisabled = false,
+  cirId,
 }) => {
   const options = useMemo(() => {
     if (isDisabled) return [];
-    const query = `SELECT ${tableName}.id, ${tableName}.nombre FROM ${tableName} ${
+    const query = `SELECT ${tableName}.id, ${tableName}.nombre FROM ${tableName} 
+    ${
       fk
         ? `JOIN ${fkTable} ON ${tableName}.${fkTable}Id = ${fkTable}.id WHERE ${fkTable}.id = ${fk}`
         : ""
-    }`;
+    } ${cirId ? `AND ${tableName}.cirId = ${cirId}` : ""}`;
+    console.log(query);
     return alasql(query);
-  }, [isDisabled, fk]);
+  }, [isDisabled, fk, cirId]);
 
   return (
     <FormControl id={`form-${tableName}`} mb={4} isDisabled={isDisabled}>
