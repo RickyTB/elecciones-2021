@@ -33,10 +33,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ heatMapType, onHeatMapChange }) => {
       p={2}
       justify="space-between"
       bg={bg}
-      position="fixed"
-      top="0"
-      left="0"
-      right="0"
+      width="full"
       boxShadow="sm"
       zIndex="sticky"
     >

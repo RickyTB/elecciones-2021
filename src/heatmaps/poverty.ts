@@ -141,7 +141,7 @@ export class PovertyHeatMap extends HeatMap<number> {
   protected paintFeature = (layer: Layer, name: string, poverty: number) => {
     layer.bindTooltip(`
       <h4><strong>${name}</strong></h4>
-      <span>${(poverty * 100).toFixed(2)}%</span>
+      <p>Nivel de pobreza: ${(poverty * 100).toFixed(2)}%</p>
     `);
 
     (layer as any).options.fillColor = this.props[Math.floor(poverty * 10)].bg;

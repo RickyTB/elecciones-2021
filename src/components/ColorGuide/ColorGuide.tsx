@@ -8,15 +8,7 @@ export interface ColorGuideProps {
 }
 
 const ColorGuide: React.FC<ColorGuideProps> = ({ heatMap }) => (
-  <Box
-    position="absolute"
-    bottom={0}
-    left={0}
-    right={0}
-    zIndex="banner"
-    boxShadow="base"
-    overflow="auto"
-  >
+  <Box width="full" zIndex="banner" boxShadow="base" overflow="auto">
     <Flex
       flexDir="row"
       justifyContent="space-evenly"

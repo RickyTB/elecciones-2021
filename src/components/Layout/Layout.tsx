@@ -9,7 +9,7 @@ import {
   PresidentialResultsHeatMap,
 } from "../../heatmaps";
 import { useState } from "react";
-import { Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { initDb } from "../../bin";
 
 export interface LayoutProps {}
@@ -29,11 +29,13 @@ const Layout: React.FC<LayoutProps> = () => {
   }, []);
 
   return heatMapMap ? (
-    <>
+    <Box d="flex" flexDirection="column" height="100vh">
       <Toolbar heatMapType={heatMap} onHeatMapChange={setHeatMap} />
-      <Map heatMap={heatMapMap[heatMap]} heatMapType={heatMap} />
+      <Box flex={1}>
+        <Map heatMap={heatMapMap[heatMap]} heatMapType={heatMap} />
+      </Box>
       <ColorGuide heatMap={heatMapMap[heatMap]} />
-    </>
+    </Box>
   ) : (
     <Text>Cargando...</Text>
   );
