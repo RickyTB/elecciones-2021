@@ -20,7 +20,7 @@ const DBSelect: React.FC<DBSelectProps> = ({
   fk,
   value,
   onChange,
-  placeholder = "Seleccione una opción",
+  placeholder = "Todas",
   label,
   isDisabled = false,
 }) => {
@@ -32,7 +32,7 @@ const DBSelect: React.FC<DBSelectProps> = ({
         : ""
     }`;
     return alasql(query);
-  }, [isDisabled]);
+  }, [isDisabled, fk]);
 
   return (
     <FormControl id={`form-${tableName}`} mb={4} isDisabled={isDisabled}>

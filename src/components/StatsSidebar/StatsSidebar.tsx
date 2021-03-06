@@ -56,7 +56,6 @@ const StatsSidebar: React.FC<StatsSidebarProps> = () => {
         tableName="parroquia"
         value={parrId}
         onChange={onParrIdChange}
-        placeholder="Seleccione una parroquia"
         label="Parroquia"
         fkTable="canton"
         fk={cantonId}
@@ -67,7 +66,6 @@ const StatsSidebar: React.FC<StatsSidebarProps> = () => {
         tableName="zona"
         value={zonaId}
         onChange={onZonaIdChange}
-        placeholder="Seleccione una zona"
         label="Zona"
         fkTable="parroquia"
         fk={parrId}
@@ -78,7 +76,6 @@ const StatsSidebar: React.FC<StatsSidebarProps> = () => {
         tableName="junta"
         value={juntaId}
         onChange={onJuntaIdChange}
-        placeholder="Seleccione una junta"
         label="Junta"
         fkTable="zona"
         fk={zonaId}
