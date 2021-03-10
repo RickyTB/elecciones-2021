@@ -111,7 +111,7 @@ const StatsSidebar: React.FC<StatsSidebarProps> = () => {
       <Button
         colorScheme="brand"
         onClick={() => setBoxPlotOpen(true)}
-        isDisabled={!cantonId}
+        isDisabled={!provId}
       >
         Graficar resultados
       </Button>
