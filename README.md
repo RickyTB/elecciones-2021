@@ -1,46 +1,31 @@
-# Getting Started with Create React App
+# Mapa Estadístico de Resultados Presidenciales Ecuador Febrero 2021
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+El presente proyecto tiene el objetivo de presentar de forma gráfica y amigable los resultados presidenciales de la elección del 7 de febrero del 2021 en Ecuador.
 
-## Available Scripts
+Los datos fueron obtenidos directamente de la página web del CNE (Consejo Nacional Electoral) el 22/02/2021.
 
-In the project directory, you can run:
+![Captura de pantalla de la aplicación](/pictures/screenshot.png)
 
-### `yarn start`
+Puede acceder a la aplicación [presionando aquí](https://rickytb.github.io/elecciones-2021/).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Instrucciones
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+* Seleccionar el tipo de mapa que prefiere visualizar en la esquina superior derecha.
+* Realizar zoom con la rueda del ratón o con los botones en pantalla para obtener la vista de cantones.
+![Captura de pantalla de cantones](/pictures/screenshot_cantones.png)
+* Ingresar los datos de la junta que desea visualizar en el panel derecho para obtener un [diagrama de caja](https://es.wikipedia.org/wiki/Diagrama_de_caja) con los resultados electorales. Puede generar los diagramas a partir de cantones o con la precisión que desee.
+![Captura de pantalla del diagrama de caja](/pictures/screenshot_diagrama.png)
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tecnología
 
-### `yarn build`
+* React
+* TypeScript
+* Chakra UI
+* AlaSQL
+* Leaflet.js
+* Plotly
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Autor
+La presente aplicación fue desarrollada por **Ricardo Baquero** para la clase **Principios de Economía** de la carrera **Ingeniería Informática** en la **Universidad Central del Ecuador**. Marzo de 2021.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
