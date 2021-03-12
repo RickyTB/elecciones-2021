@@ -7,12 +7,13 @@ import {
   HeatMap,
   PovertyHeatMap,
   PresidentialResultsHeatMap,
+  PopulationHeatMap,
 } from "../../heatmaps";
 
 export interface MapPageProps {}
 
 const MapPage: React.FC<MapPageProps> = () => {
-  const [heatMap, setHeatMap] = useState(HeatMapType.Poverty);
+  const [heatMap, setHeatMap] = useState(HeatMapType.PresidentialResults);
   const [heatMapMap, setHeatMapMap] = useState<Record<HeatMapType, HeatMap>>();
 
   useEffect(() => {
@@ -20,6 +21,7 @@ const MapPage: React.FC<MapPageProps> = () => {
       const heatMapMap: Record<HeatMapType, HeatMap> = {
         [HeatMapType.Poverty]: new PovertyHeatMap(),
         [HeatMapType.PresidentialResults]: new PresidentialResultsHeatMap(),
+        [HeatMapType.Population]: new PopulationHeatMap(),
       };
       setHeatMapMap(heatMapMap);
     });

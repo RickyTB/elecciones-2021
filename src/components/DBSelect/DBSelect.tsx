@@ -1,7 +1,6 @@
 import { FormControl, FormLabel, Select } from "@chakra-ui/react";
 import { useMemo } from "react";
 import alasql from "alasql";
-import { capitalizeFirstLetter } from "../../utils/helpers";
 
 export interface DBSelectProps {
   tableName: string;
@@ -34,7 +33,6 @@ const DBSelect: React.FC<DBSelectProps> = ({
         ? `JOIN ${fkTable} ON ${tableName}.${fkTable}Id = ${fkTable}.id WHERE ${fkTable}.id = ${fk}`
         : ""
     } ${cirId ? `AND ${tableName}.cirId = ${cirId}` : ""}`;
-    console.log(query);
     return alasql(query);
   }, [isDisabled, fk, cirId]);
 
