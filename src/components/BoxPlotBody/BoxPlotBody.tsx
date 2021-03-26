@@ -1,23 +1,12 @@
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Button,
-} from "@chakra-ui/react";
 import React from "react";
 import Plot from "react-plotly.js";
 import { useMemo } from "react";
 import alasql from "alasql";
 import { mapObject, allIndexes } from "../../utils/helpers";
 import { PresidentMap } from "../../utils/constants";
+import { Box } from "@chakra-ui/react";
 
-export interface BoxPlotModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+export interface BoxPlotBodyProps {
   ids: string[];
 }
 
@@ -92,11 +81,7 @@ const TableMap: Record<number, string> = {
   5: "junta",
 };
 
-const BoxPlotModal: React.FC<BoxPlotModalProps> = ({
-  isOpen,
-  onClose,
-  ids,
-}) => {
+const BoxPlotBody: React.FC<BoxPlotBodyProps> = ({ ids }) => {
   const [provId, cirId, cantonId, parrId, zonaId, juntaId] = ids;
 
   const results = useMemo(() => {
@@ -212,33 +197,16 @@ ORDER BY res_presidente.juntaId
   }, [provId, cirId, cantonId, parrId, zonaId, juntaId]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="full">
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>
-          Diagrama de Caja: Resultados Presidenciales Ecuador 2021
-        </ModalHeader>
-        <ModalCloseButton />
-        <ModalBody d="flex">
-          <Plot
-            data={data}
-            layout={{
-              title: names.reduce(
-                (str, name) => `${str} -> ${name ? name : "N/A"}`,
-                "JUNTA "
-              ),
-            }}
-            style={{ flex: 1 }}
-          />
-        </ModalBody>
-        <ModalFooter>
-          <Button colorScheme="red" mr={3} onClick={onClose}>
-            Cerrar
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+    <Box d="flex" flex={1}>
+      <Plot
+        data={data}
+        layout={{
+          title: names.filter(Boolean).join(" -> "),
+        }}
+        style={{ flex: 1 }}
+      />
+    </Box>
   );
 };
 
-export default BoxPlotModal;
+export default BoxPlotBody;

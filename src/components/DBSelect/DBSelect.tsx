@@ -38,8 +38,8 @@ const DBSelect: React.FC<DBSelectProps> = ({
 
   return (
     <FormControl id={`form-${tableName}`} mb={4} isDisabled={isDisabled}>
-      <FormLabel fontWeight="bold">{label}</FormLabel>
-      <Select placeholder={placeholder} onChange={onChange} value={value}>
+      <FormLabel fontWeight="bold" mb={0}>{label}</FormLabel>
+      <Select placeholder={placeholder} onChange={onChange} value={value} bg="white">
         {options.map((option: any) => (
           <option value={option.id} key={option.id}>
             {option.nombre}
