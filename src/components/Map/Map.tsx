@@ -6,10 +6,12 @@ import { useState } from "react";
 import "./Map.css";
 import { HeatMap } from "../../heatmaps";
 import { HeatMapType } from "../../enums";
+import { HeatMapInfo } from "../../models";
+import { useEffect } from "react";
 
 export interface MapProps {
-  heatMap: HeatMap;
-  heatMapType: HeatMapType;
+  heatMapList: HeatMapInfo[];
+  heatMapMap: Record<HeatMapType, HeatMap>;
 }
 
 interface MapEventsProps {
@@ -33,29 +35,43 @@ const defaultStyle = {
   opacity: 0.6,
 };
 
-const Map: React.FC<MapProps> = ({ heatMap, heatMapType }) => {
+const Map: React.FC<MapProps> = ({ heatMapList, heatMapMap }) => {
   const [zoom, setZoom] = useState(6);
+  const [flag, setFlag] = useState(false);
+
+  useEffect(() => {
+    setFlag((flag) => !flag);
+  }, [heatMapList]);
   return (
     <MapContainer
       center={[-2.778, -83.54]}
       zoom={zoom}
-      style={{ height: "100%", flex: 1, }}
+      style={{ height: "100%", flex: 1 }}
     >
-      {zoom > 8 ? (
-        <GeoJSON
-          data={cantonesData.features as any}
-          key={`${heatMapType}-cantones`}
-          onEachFeature={heatMap.handleCantonFeature}
-          style={defaultStyle}
-        />
-      ) : (
-        <GeoJSON
-          data={provinciasData.features as any}
-          key={`${heatMapType}-provincias`}
-          onEachFeature={heatMap.handleProvinciaFeature}
-          style={defaultStyle}
-        />
-      )}
+      {heatMapList
+        .slice(0)
+        .reverse()
+        .map((heatMapInfo, index) =>
+          heatMapInfo.active ? (
+            zoom > 8 ? (
+              <GeoJSON
+                data={cantonesData.features as any}
+                key={`${heatMapInfo.type}-cantones-${flag}`}
+                onEachFeature={heatMapMap[heatMapInfo.type].handleCantonFeature}
+                style={defaultStyle}
+              />
+            ) : (
+              <GeoJSON
+                data={provinciasData.features as any}
+                key={`${heatMapInfo.type}-provincias-${flag}`}
+                onEachFeature={
+                  heatMapMap[heatMapInfo.type].handleProvinciaFeature
+                }
+                style={defaultStyle}
+              />
+            )
+          ) : null
+        )}
       <MapEvents onZoomChange={setZoom} />
     </MapContainer>
   );

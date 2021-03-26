@@ -145,6 +145,7 @@ export class PovertyHeatMap extends HeatMap<number> {
     `);
 
     (layer as any).options.fillColor = this.props[Math.floor(poverty * 10)].bg;
+    (layer as any).options.fillOpacity = this.opacity;
   };
 
   protected processProvincias = (id: number) => {

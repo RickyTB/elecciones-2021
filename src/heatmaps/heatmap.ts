@@ -8,6 +8,8 @@ export abstract class HeatMap<T = any> {
   private provResultsCache: Record<number, T> = {};
   private cantonResultsCache: Record<number, T> = {};
 
+  protected opacity: number = 1;
+
   handleProvinciaFeature = (
     feature: geojson.Feature<geojson.GeometryObject>,
     layer: Layer
@@ -45,4 +47,8 @@ export abstract class HeatMap<T = any> {
   protected abstract processProvincias: (id: number) => T;
 
   protected abstract processCantones: (id: number) => T;
+
+  setOpacity = (opacity: number) => {
+    this.opacity = opacity;
+  };
 }

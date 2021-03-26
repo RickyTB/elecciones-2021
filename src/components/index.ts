@@ -7,3 +7,5 @@ export * from "./ColorGuide";
 export * from "./ColorBox";
 export * from "./DiagramGenerator";
 export * from "./DBSelect";
+export * from "./HeatMapSideBar";
+export * from "./HeatMapControl";

@@ -79,9 +79,9 @@ export class PopulationHeatMap extends HeatMap<number> {
         `);
 
     const index = TestMap.findIndex((test) => test(value));
-    console.log(index, value);
     //@ts-ignore
     (layer as any).options.fillColor = this.props[index].bg;
+    (layer as any).options.fillOpacity = this.opacity;
   };
 
   processProvincias = (id: number) => {

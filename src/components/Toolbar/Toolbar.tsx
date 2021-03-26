@@ -8,7 +8,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { HeatMapType, Page } from "../../enums";
+import { Page } from "../../enums";
 import { BiMapAlt } from "react-icons/bi";
 import { AiOutlineBoxPlot } from "react-icons/ai";
 
@@ -16,15 +16,7 @@ export interface ToolbarProps {
   className?: string;
   currentPage: Page;
   onPageChange: (page: Page) => void;
-  //heatMapType: HeatMapType;
-  //onHeatMapChange: (type: HeatMapType) => void;
 }
-
-const titles: Record<HeatMapType, string> = {
-  [HeatMapType.PresidentialResults]: "Resultados presidenciales",
-  [HeatMapType.Population]: "# de sufragantes",
-  [HeatMapType.Poverty]: "Pobreza",
-};
 
 const Toolbar: React.FC<ToolbarProps> = ({ currentPage, onPageChange }) => {
   const bg = useColorModeValue("brand.600", "brand.300");

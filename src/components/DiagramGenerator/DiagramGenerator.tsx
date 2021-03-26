@@ -1,4 +1,4 @@
-import { Breadcrumb, BreadcrumbItem } from "@chakra-ui/react";
+import { Box, Breadcrumb, BreadcrumbItem, Text } from "@chakra-ui/react";
 import React, { useReducer } from "react";
 import { DBSelect } from "../DBSelect";
 import { BoxPlotBody } from "../BoxPlotBody";
@@ -40,7 +40,11 @@ const DiagramGenerator: React.FC<DiagramGeneratorProps> = () => {
 
   return (
     <>
-      <Breadcrumb mt={4} mb={2} separator={<ChevronRightIcon color="gray.500" />}>
+      <Breadcrumb
+        mt={4}
+        mb={2}
+        separator={<ChevronRightIcon color="gray.500" />}
+      >
         <BreadcrumbItem>
           <DBSelect
             tableName="provincia"
@@ -109,7 +113,15 @@ const DiagramGenerator: React.FC<DiagramGeneratorProps> = () => {
           />
         </BreadcrumbItem>
       </Breadcrumb>
-      {ids[IndexPosition.Provincia] && <BoxPlotBody ids={ids} />}
+      {ids[IndexPosition.Provincia] ? (
+        <BoxPlotBody ids={ids} />
+      ) : (
+        <Box d="flex" justifyContent="center" alignItems="center" flex={1}>
+          <Text color="blackAlpha.700">
+            Seleccione una provincia para comenzar
+          </Text>
+        </Box>
+      )}
     </>
   );
 };

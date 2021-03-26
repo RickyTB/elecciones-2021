@@ -93,6 +93,7 @@ export class PresidentialResultsHeatMap extends HeatMap<PresResult> {
 
     //@ts-ignore
     (layer as any).options.fillColor = this.props[presPropMap[order[0][0]]].bg;
+    (layer as any).options.fillOpacity = this.opacity;
   };
 
   processProvincias = (id: number) => {
