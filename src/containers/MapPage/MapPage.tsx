@@ -1,7 +1,6 @@
-import { Box, Text } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { initDb } from "../../bin";
-import { ColorGuide, Map, StatsSidebar, Toolbar } from "../../components";
+import { Box } from "@chakra-ui/react";
+import React, { useState, useMemo } from "react";
+import { ColorGuide, Map } from "../../components";
 import { HeatMapType } from "../../enums";
 import {
   HeatMap,
@@ -14,30 +13,22 @@ export interface MapPageProps {}
 
 const MapPage: React.FC<MapPageProps> = () => {
   const [heatMap, setHeatMap] = useState(HeatMapType.PresidentialResults);
-  const [heatMapMap, setHeatMapMap] = useState<Record<HeatMapType, HeatMap>>();
+  const heatMapMap = useMemo<Record<HeatMapType, HeatMap>>(
+    () => ({
+      [HeatMapType.Poverty]: new PovertyHeatMap(),
+      [HeatMapType.PresidentialResults]: new PresidentialResultsHeatMap(),
+      [HeatMapType.Population]: new PopulationHeatMap(),
+    }),
+    []
+  );
 
-  useEffect(() => {
-    initDb().then(() => {
-      const heatMapMap: Record<HeatMapType, HeatMap> = {
-        [HeatMapType.Poverty]: new PovertyHeatMap(),
-        [HeatMapType.PresidentialResults]: new PresidentialResultsHeatMap(),
-        [HeatMapType.Population]: new PopulationHeatMap(),
-      };
-      setHeatMapMap(heatMapMap);
-    });
-  }, []);
-
-  return heatMapMap ? (
+  return (
     <>
-      <Toolbar heatMapType={heatMap} onHeatMapChange={setHeatMap} />
       <Box flex={1} d="flex">
         <Map heatMap={heatMapMap[heatMap]} heatMapType={heatMap} />
-        <StatsSidebar />
       </Box>
       <ColorGuide heatMap={heatMapMap[heatMap]} />
     </>
-  ) : (
-    <Text>Cargando...</Text>
   );
 };
 

@@ -1,22 +1,23 @@
-import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Button,
+  ButtonGroup,
   Flex,
   Heading,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
+  Icon,
+  IconButton,
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { HeatMapType } from "../../enums";
+import { HeatMapType, Page } from "../../enums";
+import { BiMapAlt } from "react-icons/bi";
+import { AiOutlineBoxPlot } from "react-icons/ai";
 
 export interface ToolbarProps {
   className?: string;
-  heatMapType: HeatMapType;
-  onHeatMapChange: (type: HeatMapType) => void;
+  currentPage: Page;
+  onPageChange: (page: Page) => void;
+  //heatMapType: HeatMapType;
+  //onHeatMapChange: (type: HeatMapType) => void;
 }
 
 const titles: Record<HeatMapType, string> = {
@@ -25,7 +26,7 @@ const titles: Record<HeatMapType, string> = {
   [HeatMapType.Poverty]: "Pobreza",
 };
 
-const Toolbar: React.FC<ToolbarProps> = ({ heatMapType, onHeatMapChange }) => {
+const Toolbar: React.FC<ToolbarProps> = ({ currentPage, onPageChange }) => {
   const bg = useColorModeValue("brand.600", "brand.300");
   const color = useColorModeValue("white", "gray.800");
   return (
@@ -44,18 +45,22 @@ const Toolbar: React.FC<ToolbarProps> = ({ heatMapType, onHeatMapChange }) => {
         </Heading>
       </Box>
       <Box>
-        <Menu>
-          <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-            {titles[heatMapType]}
-          </MenuButton>
-          <MenuList>
-            {(Object.keys(titles) as HeatMapType[]).map((key) => (
-              <MenuItem key={key} onClick={() => onHeatMapChange(key)}>
-                {titles[key]}
-              </MenuItem>
-            ))}
-          </MenuList>
-        </Menu>
+        <ButtonGroup isAttached variant="solid" colorScheme="teal">
+          <IconButton
+            title="Mostrar mapa"
+            isActive={currentPage === Page.MapPage}
+            aria-label="Show map"
+            icon={<Icon as={BiMapAlt} />}
+            onClick={() => onPageChange(Page.MapPage)}
+          />
+          <IconButton
+            title="Mostrar diagrama"
+            isActive={currentPage === Page.DiagramPage}
+            aria-label="Show diagram"
+            icon={<Icon as={AiOutlineBoxPlot} />}
+            onClick={() => onPageChange(Page.DiagramPage)}
+          />
+        </ButtonGroup>
       </Box>
     </Flex>
   );
