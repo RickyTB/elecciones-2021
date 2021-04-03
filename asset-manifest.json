@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/elecciones-2021/static/css/main.8724d14d.chunk.css",
-    "main.js": "/elecciones-2021/static/js/main.5b2ecff4.chunk.js",
-    "main.js.map": "/elecciones-2021/static/js/main.5b2ecff4.chunk.js.map",
-    "runtime-main.js": "/elecciones-2021/static/js/runtime-main.8d224d6d.js",
-    "runtime-main.js.map": "/elecciones-2021/static/js/runtime-main.8d224d6d.js.map",
+    "main.js": "/elecciones-2021/static/js/main.9222182e.chunk.js",
+    "main.js.map": "/elecciones-2021/static/js/main.9222182e.chunk.js.map",
+    "runtime-main.js": "/elecciones-2021/static/js/runtime-main.aa327f2e.js",
+    "runtime-main.js.map": "/elecciones-2021/static/js/runtime-main.aa327f2e.js.map",
     "static/css/2.b4ebbe46.chunk.css": "/elecciones-2021/static/css/2.b4ebbe46.chunk.css",
-    "static/js/2.45c9a91e.chunk.js": "/elecciones-2021/static/js/2.45c9a91e.chunk.js",
-    "static/js/2.45c9a91e.chunk.js.map": "/elecciones-2021/static/js/2.45c9a91e.chunk.js.map",
-    "static/js/3.74a94251.chunk.js": "/elecciones-2021/static/js/3.74a94251.chunk.js",
-    "static/js/3.74a94251.chunk.js.map": "/elecciones-2021/static/js/3.74a94251.chunk.js.map",
+    "static/js/2.db95136d.chunk.js": "/elecciones-2021/static/js/2.db95136d.chunk.js",
+    "static/js/2.db95136d.chunk.js.map": "/elecciones-2021/static/js/2.db95136d.chunk.js.map",
+    "static/js/3.054dc675.chunk.js": "/elecciones-2021/static/js/3.054dc675.chunk.js",
+    "static/js/3.054dc675.chunk.js.map": "/elecciones-2021/static/js/3.054dc675.chunk.js.map",
     "index.html": "/elecciones-2021/index.html",
     "static/css/2.b4ebbe46.chunk.css.map": "/elecciones-2021/static/css/2.b4ebbe46.chunk.css.map",
     "static/css/main.8724d14d.chunk.css.map": "/elecciones-2021/static/css/main.8724d14d.chunk.css.map",
-    "static/js/2.45c9a91e.chunk.js.LICENSE.txt": "/elecciones-2021/static/js/2.45c9a91e.chunk.js.LICENSE.txt",
+    "static/js/2.db95136d.chunk.js.LICENSE.txt": "/elecciones-2021/static/js/2.db95136d.chunk.js.LICENSE.txt",
     "static/media/elecciones_canton.c922d201.csv": "/elecciones-2021/static/media/elecciones_canton.c922d201.csv",
     "static/media/elecciones_circunscripcion.c6258590.csv": "/elecciones-2021/static/media/elecciones_circunscripcion.c6258590.csv",
     "static/media/elecciones_junta.a0565549.csv": "/elecciones-2021/static/media/elecciones_junta.a0565549.csv",
@@ -25,10 +25,10 @@
     "static/media/pobreza_parroquias.ca411e9e.csv": "/elecciones-2021/static/media/pobreza_parroquias.ca411e9e.csv"
   },
   "entrypoints": [
-    "static/js/runtime-main.8d224d6d.js",
+    "static/js/runtime-main.aa327f2e.js",
     "static/css/2.b4ebbe46.chunk.css",
-    "static/js/2.45c9a91e.chunk.js",
+    "static/js/2.db95136d.chunk.js",
     "static/css/main.8724d14d.chunk.css",
-    "static/js/main.5b2ecff4.chunk.js"
+    "static/js/main.9222182e.chunk.js"
   ]
 }
