@@ -5,6 +5,7 @@ import alasql from "alasql";
 import { mapObject, allIndexes } from "../../utils/helpers";
 import { PresidentMap } from "../../utils/constants";
 import { Box } from "@chakra-ui/react";
+import { PlotDatum, PlotMouseEvent } from "plotly.js";
 
 export interface BoxPlotBodyProps {
   ids: string[];
@@ -137,12 +138,13 @@ ORDER BY res_presidente.juntaId
           obj[`cand_${i}`].results.push(result[`cand_${i}`]);
           //@ts-ignore
           obj[`cand_${i}`].info.push([
-            "Provincia: " + result.provincia,
-            "Circunscripción: " + (result.circunscripcion || "N/A"),
-            "Cantón: " + result.canton,
-            "Zona: " + result.zona,
-            "Junta: " + result.junta,
-            "Código: " + result.codigo,
+            result.provincia,
+            result.circunscripcion || "N/A",
+            result.canton,
+            result.parroquia,
+            result.zona,
+            result.junta,
+            result.codigo,
           ]);
         }
         return obj;
@@ -180,6 +182,15 @@ ORDER BY res_presidente.juntaId
       name: PresidentMap[key],
       text: cand.info,
       boxpoints: "suspectedoutliers",
+      hovertemplate:
+        "<b>Provincia: </b>%{text[0]}<br>" +
+        "<b>Circunscripción: </b>%{text[1]}<br>" +
+        "<b>Cantón: </b>%{text[2]}<br>" +
+        "<b>Parroquia: </b>%{text[3]}<br>" +
+        "<b>Zona: </b>%{text[4]}<br>" +
+        "<b>Junta: </b>%{text[5]}<br>" +
+        "<b>Código: </b>%{text[6]}<br>" +
+        "<b>Votos: </b>%{y}<br>",
     })) as any;
   }, [results]);
 
@@ -201,8 +212,11 @@ ORDER BY res_presidente.juntaId
       <Plot
         data={data}
         layout={{
-          title: names.filter(Boolean).join(" -> "),
+          title:
+            names.filter(Boolean).join(" -> ") +
+            ` (${data[0].y.length} juntas)`,
         }}
+        config={{ responsive: true }}
         style={{ flex: 1 }}
       />
     </Box>
